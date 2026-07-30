@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Agenda de Actividades" />
+        <title>
+            {% block title %}
+                Agenda de Actividades
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static 'tareas/css/output.css' %}" />
+    </head>
+    <body class="min-h-screen flex flex-col bg-brand-bg text-text-main font-sans">
+        <header class="bg-brand-primary text-white py-4 shadow-md">
+            <div class="max-w-3xl w-full mx-auto px-4 flex justify-between items-center">
+                <a href="{% url 'lista_tareas' %}"
+                   class="hover:opacity-95 transition-opacity">
+                    <h1 class="font-bold text-xl md:text-2xl tracking-tight">Agenda de Actividades</h1>
+                </a>
+                <a href="{% url 'nueva_tarea' %}"
+                   class="border border-white/40 hover:bg-white/10 text-white px-4 py-1.5 rounded-pill text-sm font-medium transition-colors duration-200">
+                    + Nueva actividad
+                </a>
+            </div>
+        </header>
+        <main class="flex-1 w-full max-w-3xl mx-auto py-8">
+            {% block content %}
+            {% endblock content %}
+        </main>
+        <footer class="bg-brand-primary text-white py-4 mt-auto">
+            <div class="max-w-3xl w-full mx-auto px-4">
+                <p class="text-center text-xs md:text-sm font-light tracking-wide">
+                    © Aldo Sandoval Zepeda. Todos los derechos reservados.
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "tareas/base.html" %}
+{% block title %}Lista de Tareas{% endblock title %}
+{% block content %}
+    <div class="w-full">
+        <h2 class="text-2xl font-semibold text-center text-text-main mb-6">Lista de Actividades</h2>
+        <div class="space-y-6 mb-8">
+            {% comment %} Muestra el listado de tareas. {% endcomment %}
+            {% for tarea in page_obj %}
+                <article class="bg-card-bg rounded-card shadow-card p-6 md:p-8 border border-card-border">
+                    <h3 class="text-xl font-bold text-text-title border-b border-card-border pb-3 mb-4">{{ tarea }}</h3>
+                    <div class="space-y-3 text-text-muted text-sm md:text-base mb-6">
+                        <p>
+                            <strong class="font-medium text-text-main">Descripción:</strong> {{ tarea.descripcion }}
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <strong class="font-medium text-text-main">Prioridad:</strong>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-pill inline-block {% if tarea.prioridad == 'alta' %} bg-badge-high-bg text-badge-high-text {% elif tarea.prioridad == 'media' %} bg-amber-100 text-amber-700 {% else %} bg-emerald-100 text-emerald-700 {% endif %}">
+                                {{ tarea.prioridad }}
+                            </span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <strong class="font-medium text-text-main">Completada:</strong>
+                            <span class="bg-badge-neutral-bg text-badge-neutral-text text-xs font-medium px-3 py-1 rounded-pill">
+                                {{ tarea.completada|yesno:"Sí,No" }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-2">
+                        <a class="bg-btn-edit hover:bg-btn-edit-hover text-white px-6 py-2 rounded-pill text-sm font-medium transition-colors"
+                           href="{% url 'editar_tarea' tarea.id %}">Editar</a>
+                        <a class="bg-btn-delete hover:bg-btn-delete-hover text-white px-6 py-2 rounded-pill text-sm font-medium transition-colors"
+                           href="{% url 'eliminar_tarea' tarea.id %}">Eliminar</a>
+                    </div>
+                </article>
+                {% comment %} Si no hay tareas. (estado vacío) {% endcomment %}
+            {% empty %}
+                <div class="bg-card-bg rounded-card shadow-card p-8 md:p-12 border border-card-border text-center my-6 flex flex-col items-center">
+                    <div class="w-16 h-16 mb-4 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-8 w-8"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-main mb-1">No hay actividades registradas</h3>
+                    <p class="text-text-muted text-sm mb-6 max-w-sm">
+                        Tu lista está vacía. Comienza agregando tu primera tarea a la agenda.
+                    </p>
+                    <a href="{% url 'nueva_tarea' %}"
+                       class="inline-flex items-center gap-2 bg-brand-primary hover:bg-blue-800 text-white px-6 py-2.5 rounded-pill text-sm font-medium transition-colors shadow-sm">
+                        + Nueva actividad
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        {% comment %} Navegación entre páginas. {% endcomment %}
+        {% if page_obj.has_other_pages %}
+            <nav class="flex justify-center items-center py-4">
+                <ul class="flex items-center gap-2 text-sm font-medium flex-wrap justify-center">
+                    {% if page_obj.has_previous %}
+                        <li>
+                            <a href="?page=1"
+                               class="border border-slate-300 text-text-muted hover:bg-slate-200/60 px-3 py-1 rounded-pill transition-colors">
+                                « First
+                            </a>
+                        </li>
+                        <li>
+                            <a href="?page={{ page_obj.previous_page_number }}"
+                               class="border border-slate-300 text-text-muted hover:bg-slate-200/60 px-3 py-1 rounded-pill transition-colors">
+                                Previous
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for pagina in page_obj.paginator.page_range %}
+                        <li>
+                            {% if pagina == page_obj.number %}
+                                <span class="bg-brand-primary text-white w-8 h-8 rounded-pill flex items-center justify-center shadow-sm">
+                                    {{ pagina }}
+                                </span>
+                            {% else %}
+                                <a href="?page={{ pagina }}"
+                                   class="border border-slate-300 text-text-muted hover:bg-slate-200/60 w-8 h-8 rounded-pill flex items-center justify-center transition-colors">
+                                    {{ pagina }}
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li>
+                            <a href="?page={{ page_obj.next_page_number }}"
+                               class="border border-slate-300 text-text-muted hover:bg-slate-200/60 px-3 py-1 rounded-pill transition-colors">
+                                Next
+                            </a>
+                        </li>
+                        <li>
+                            <a href="?page={{ page_obj.paginator.num_pages }}"
+                               class="border border-slate-300 text-text-muted hover:bg-slate-200/60 px-3 py-1 rounded-pill transition-colors">
+                                Last »
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock content %}

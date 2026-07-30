@@ -1,0 +1,57 @@
+{% extends "tareas/base.html" %}
+{% block title %}Editar Actividad{% endblock title %}
+{% block content %}
+    <div class="w-full max-w-xl mx-auto">
+        <h2 class="text-2xl font-semibold text-center text-text-main mb-6">Editar Actividad</h2>
+        <div class="bg-card-bg rounded-card shadow-card p-6 md:p-8 border border-card-border">
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                <div>
+                    <label for="{{ form.titulo.id_for_label }}"
+                           class="block text-sm font-semibold text-text-main mb-1.5">{{ form.titulo.label }}</label>
+                    {{ form.titulo }}
+                    {% if form.titulo.errors %}
+                        <p class="text-rose-500 text-xs mt-1">{{ form.titulo.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.descripcion.id_for_label }}"
+                           class="block text-sm font-semibold text-text-main mb-1.5">
+                        {{ form.descripcion.label }}
+                    </label>
+                    {{ form.descripcion }}
+                    {% if form.descripcion.errors %}
+                        <p class="text-rose-500 text-xs mt-1">{{ form.descripcion.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.prioridad.id_for_label }}"
+                           class="block text-sm font-semibold text-text-main mb-1.5">{{ form.prioridad.label }}</label>
+                    {{ form.prioridad }}
+                    {% if form.prioridad.errors %}
+                        <p class="text-rose-500 text-xs mt-1">{{ form.prioridad.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                {% if form.completada %}
+                    <div class="flex items-center gap-3 pt-1">
+                        {{ form.completada }}
+                        <label for="{{ form.completada.id_for_label }}"
+                               class="text-sm font-medium text-text-main cursor-pointer select-none">
+                            {{ form.completada.label }}
+                        </label>
+                    </div>
+                {% endif %}
+                <div class="flex justify-end items-center gap-3 pt-4 border-t border-card-border mt-6">
+                    <a href="{% url 'lista_tareas' %}"
+                       class="border border-slate-300 text-text-muted hover:bg-slate-200/60 px-6 py-2 rounded-pill text-sm font-medium transition-colors">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                            class="bg-brand-primary hover:bg-blue-800 text-white px-6 py-2 rounded-pill text-sm font-medium shadow-sm transition-colors cursor-pointer">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

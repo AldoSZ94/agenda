@@ -1,0 +1,21 @@
+{% extends "tareas/base.html" %}
+{% block title %}Eliminar Actividad{% endblock title %}
+{% block content %}
+    <div class="w-9/10 max-w-2xl mx-auto flex-1 flex items-center">
+        <main class="w-full bg-white rounded-xl shadow-lg p-8 text-center">
+            <h2 class="text-2xl font-bold text-slate-800">¿Deseas eliminar esta tarea?</h2>
+            <p class="mt-2 text-lg font-semibold text-principal">"{{ tarea }}"</p>
+            <form method="post" class="mt-8 flex justify-center gap-4">
+                {% csrf_token %}
+                <a href="{% url 'lista_tareas' %}"
+                   class="px-6 py-2 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors">
+                    Cancelar
+                </a>
+                <button type="submit"
+                        class="bg-btn-delete text-white px-6 py-2 rounded-md cursor-pointer hover:opacity-90 transition-opacity">
+                    Eliminar
+                </button>
+            </form>
+        </main>
+    </div>
+{% endblock content %}

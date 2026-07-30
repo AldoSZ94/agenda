@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@700&display=swap');
+
+@import 'tailwindcss';
+
+@source "../../../templates";
+
+@theme {
+  /* Fuentes */
+  --font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Colores */
+  --color-brand-primary: #1d4ed8; /* Blue-700 (Header/Footer) */
+  --color-brand-bg: #f1f5f9; /* Slate-100 (Fondo principal) */
+  --color-card-bg: #ffffff; /* Blanco */
+  --color-card-border: #f1f5f9; /* Borde suave */
+
+  /* Tipografía */
+  --color-text-main: #1e293b; /* Slate-800 */
+  --color-text-muted: #475569; /* Slate-600 */
+  --color-text-title: #1e3a8a; /* Blue-900 */
+
+  /* Botones y Hovers */
+  --color-btn-edit: #06b6d4; /* Cyan-500 */
+  --color-btn-edit-hover: #0891b2; /* Cyan-600 */
+  --color-btn-delete: #f43f5e; /* Rose-500 */
+  --color-btn-delete-hover: #e11d48; /* Rose-600 */
+
+  /* Badges / Estados */
+  --color-badge-high-bg: #fee2e2; /* Red-100 */
+  --color-badge-high-text: #dc2626; /* Red-600 */
+  --color-badge-neutral-bg: #f1f5f9; /* Slate-100 */
+  --color-badge-neutral-text: #475569; /* Slate-600 */
+
+  /* Esquinas y Bordes */
+  --radius-card: 1rem; /* 16px (rounded-2xl) */
+  --radius-pill: 9999px; /* Redondeado completo (rounded-full) */
+
+  /* Sombras */
+  --shadow-card: 0 10px 25px -5px rgba(226, 232, 240, 0.8);
+}
